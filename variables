@@ -1,0 +1,27 @@
+variable "sg_create" {  #name 
+  
+
+  description = "test"   #give a description about vatiable
+  type = number          #type of data
+  default = 22           #if we didn assign value it will consider default
+  sensitive = false
+}
+
+
+variable "size" {
+
+  description = "value"
+  type = list(any)
+  default = ["10g","20g","30g"]
+
+
+  
+}
+
+variable "ip_list" {
+    type = list(any)
+    description = "iplist"
+    default = [ "10.5.5.4","197.23.44.2","34.34.200.43" ]
+
+
+}
