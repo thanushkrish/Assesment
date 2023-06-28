@@ -1,13 +1,12 @@
 
 #LIST AND MAP 
-#WRITE PROGRAM FOR RESOURCE BLOCK EC2,VPC,SECURITYGRP,SUBNET
+#WRITE PROGRAM FOR RESOURCE BLOCK EC2,VPC,SECURITYGRP,SUBNET ---> remember all types required parameters eg: type,port,description....
 #FLOW IN WHERE TERRAFORM CHECKS VARIABLE VALUE
 #COMMAND TO CHANGE DEFAULT VARIABLE VALUE 
 #META DATA , LIFECYCLE 
 #DATa blocks
 #DEFINING VARIABLE
-
-
+# "${}" --> derrive data from datablock
 
 
 
@@ -52,8 +51,8 @@ resource "aws_security_group_rule" "ingress" {
     from_port = 22
     to_port = 65332
     protocol = "ssh"
-    cidr_blocks = 0
-    security_group_id = aws_security_group.sample_sg.id    
+    cidr_blocks = ["${data.aws_vpc.tags[name]]   #calling data in a resource 
+    security_group_id = aws_security_group.sample_sg.id    # ----> assignng id automaticaly .id calls the id 
   
 }
 
@@ -63,7 +62,18 @@ resource "aws_security_group_rule" "egress" {
     description = "purpose egreess"
     to_to_port = 0
     from_port = 0 
-    protocol = "ssh"   
+    protocol = "-1"       # -> to open all port    
     security_group_id = aws_security_group.sample_sg.id
+    cidr_blocks = ["0.0.0.0/0"]
     
+}
+
+
+
+
+#### DATA BLOCK ####
+
+
+data "aws_vpc" "devtest-vpc" {
+    id = "vpc-073hdhdb873hdh"
 }
